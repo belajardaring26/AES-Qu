@@ -89,5 +89,299 @@
         </form>
     </div>
 
+    <!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Ujian Siswa</title>
+    <style>
+        /* CSS Dasar */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding-top: 20px;
+            height: 100vh; /* Tinggi penuh */
+            position: fixed; /* Agar tetap di tempat saat scroll */
+        }
+        .sidebar h3 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 15px 20px;
+            border-bottom: 1px solid #444;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar ul li:hover {
+            background-color: #555;
+            cursor: pointer;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block; /* Agar seluruh area li bisa diklik */
+        }
+        .main-content {
+            margin-left: 250px; /* Sesuaikan dengan lebar sidebar */
+            padding: 30px;
+            width: calc(100% - 250px); /* Lebar sisa */
+        }
+        .main-content h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Styling untuk elemen Login (dari contoh sebelumnya) */
+        .login-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 30px; /* Jarak dari konten lain */
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .login-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+        .forgot-password {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .forgot-password a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        /* Styling untuk area ujian */
+        .exam-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .exam-section h3 {
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        .question p {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            cursor: pointer;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        .exam-footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .submit-exam-button {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        .submit-exam-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigasi -->
+    <div class="sidebar">
+        <h3>Menu Siswa</h3>
+        <ul>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#ujian">Mulai Ujian</a></li>
+            <li><a href="#nilai">Lihat Nilai</a></li>
+            <li><a href="#profil">Profil Saya</a></li>
+            <li><a href="#logout">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Konten Utama -->
+    <div class="main-content">
+
+        <!-- Bagian Login (bisa disembunyikan/ditampilkan berdasarkan status login) -->
+        <div class="login-container">
+            <h2>Login Siswa</h2>
+            <form action="/proses-login-siswa" method="post">
+                <div class="input-group">
+                    <label for="username">NISN:</label>
+                    <input type="text" id="username" name="nisn" required placeholder="Masukkan NISN">
+                </div>
+                <div class="input-group">
+                    <label for="password">Kata Sandi:</label>
+                    <input type="password" id="password" name="password" required placeholder="Masukkan Kata Sandi">
+                </div>
+                <button type="submit" class="login-button">Masuk</button>
+                <div class="forgot-password">
+                    <a href="#">Lupa Kata Sandi?</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Bagian Ujian -->
+        <div id="ujian" class="exam-section">
+            <h2>Ujian Matematika Dasar</h2>
+            <p>Waktu Tersisa: <span id="timer">01:00:00</span></p>
+
+            <form action="/submit-ujian" method="post"> <!-- Ganti "/submit-ujian" dengan URL endpoint server Anda -->
+                <div class="question">
+                    <p>1. Berapakah hasil dari 5 + 7?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="a"> a. 10</label>
+                        <label><input type="radio" name="q1" value="b"> b. 12</label>
+                        <label><input type="radio" name="q1" value="c"> c. 13</label>
+                        <label><input type="radio" name="q1" value="d"> d. 15</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>2. Jika x = 3, berapakah nilai dari 2x + 5?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="a"> a. 8</label>
+                        <label><input type="radio" name="q2" value="b"> b. 9</label>
+                        <label><input type="radio" name="q2" value="c"> c. 11</label>
+                        <label><input type="radio" name="q2" value="d"> d. 12</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>3. Bentuk sederhana dari 2(x + 3) adalah?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="a"> a. 2x + 3</label>
+                        <label><input type="radio" name="q3" value="b"> b. 2x + 5</label>
+                        <label><input type="radio" name="q3" value="c"> c. 2x + 6</label>
+                        <label><input type="radio" name="q3" value="d"> d. x + 6</label>
+                    </div>
+                </div>
+
+                <!-- Tambahkan lebih banyak pertanyaan di sini -->
+
+                <div class="exam-footer">
+                    <button type="submit" class="submit-exam-button">Selesaikan Ujian</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Anda bisa menambahkan bagian lain seperti Dashboard, Nilai, Profil di sini -->
+        <div id="dashboard" class="exam-section">
+            <h2>Dashboard Siswa</h2>
+            <p>Selamat datang di portal ujian Anda. Silakan pilih ujian yang tersedia atau lihat hasil ujian sebelumnya.</p>
+            <!-- Konten dashboard -->
+        </div>
+
+        <div id="nilai" class="exam-section">
+            <h2>Nilai Ujian</h2>
+            <p>Daftar nilai ujian Anda akan ditampilkan di sini.</p>
+            <!-- Konten daftar nilai -->
+        </div>
+
+        <div id="profil" class="exam-section">
+            <h2>Profil Saya</h2>
+            <p>Informasi profil siswa Anda.</p>
+            <!-- Konten profil -->
+        </div>
+
+    </div> <!-- Akhir main-content -->
+
+    <!-- JavaScript sederhana untuk timer (opsional) -->
+    <script>
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = duration; // Reset timer jika diperlukan atau arahkan ke halaman selesai
+                    alert("Waktu ujian habis!");
+                    // Anda bisa otomatis submit form di sini jika diinginkan
+                    // document.querySelector('form').submit();
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            var oneHour = 60 * 60; // Durasi ujian dalam detik (1 jam)
+            var display = document.querySelector('#timer');
+            startTimer(oneHour, display);
+        };
+    </script>
+
+</body>
+</html>
 </body>
 </html>
